@@ -9,7 +9,7 @@ window.onload = () =>{
 
 //renderizar pistas
 const renderTracks = async () =>{
-    const response = await fetch(`http://localhost:3000/track`)
+    const response = await fetch(`https://gestorespacos.herokuapp.com/track`)
     const track = await response.json()
     
     let i =1
@@ -58,7 +58,7 @@ const renderTracks = async () =>{
                   if (result.value) {
                       let idTrack = btnDelete[i].getAttribute("value")
                       try {
-                  const response = await fetch(`http://localhost:3000/track/del/${idTrack}`, { method: "PUT" })
+                  const response = await fetch(`https://gestorespacos.herokuapp.com/track/del/${idTrack}`, { method: "PUT" })
                   if (response.status == 204) {
                       swal('Removido!', 'A pista foi removida !', 'success')
                   }
@@ -86,7 +86,7 @@ const renderTracks = async () =>{
 
     //fetch para buscar preencher o menu com os dados do utilizador
     const renderMenu = async () =>{
-        const response1 = await fetch(`http://localhost:3000/spacemanager/inf/henriquemalta1988@gmail.com`);
+        const response1 = await fetch(https://gestorespacos.herokuapp.com/spacemanager/inf/henriquemalta1988@gmail.com`);
         const p = await response1.json();
         const spacemanager = p[0];
     
@@ -103,7 +103,7 @@ console.log(btnView)
 for (let i = 0; i < btnView.length; i++) {
   btnView[i].addEventListener("click", () => {  
     console.log("rrrrrrrrr")
-    const response2 =  fetch(`http://localhost:3000/track/${id_track}`)
+    const response2 =  fetch(`https://gestorespacos.herokuapp.com/track/${id_track}`)
     const tracks = response2.json()
        
         if (track.id_track == btnView[i].getAttribute("value")) {
@@ -158,7 +158,7 @@ console.log("antescaracteristicas")
     let response
         if (isNew){
             console.log("entrou no if ")
-        response = await fetch(`http://localhost:3000/track`,{
+        response = await fetch(`https://gestorespacos.herokuapp.com/track`,{
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
