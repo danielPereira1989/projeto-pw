@@ -3,11 +3,11 @@ window.onload = () => {
 
     //fetch para buscar preencher o menu com os dados do utilizador
     const renderMenu = async () =>{
-      const response1 = await fetch(`http://localhost:3000/spacemanager/inf/${user_id}`);
+      const response1 = await fetch(`https://gestorespacos.herokuapp.com/spacemanager/inf/${user_id}`);
       const p = await response1.json();
       const spacemanager = p[0];
       console.log(spacemanager.nome_gestor_espaco);
-  
+
       document.getElementById("nome1").innerHTML=spacemanager.nome_gestor_espaco;
       document.getElementById("nome2").innerHTML=spacemanager.nome_gestor_espaco;
       document.getElementById("email1").innerHTML=spacemanager.email_gestor;
@@ -16,10 +16,10 @@ window.onload = () => {
 
 
 
-    
+
     //fetch para buscar os dados e apresentar na página
     const renderInformacoes = async () =>{
-      const response2 = await fetch(`http://localhost:3000/spacemanager/inf/${user_id}`);
+      const response2 = await fetch(`https://gestorespacos.herokuapp.com/spacemanager/inf/${user_id}`);
       const ps = await response2.json();
       const spacemanager = ps[0];
 
@@ -55,7 +55,7 @@ submeterNome.addEventListener("submit", async (event) =>{
   event.preventDefault();
 
     fetch(`http://localhost:3000/spacemanager/ana@gmail.com`, {
-      headers: {"Content-Type": "application/x-www-form-urlencoded"},          
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},
       method: "PUT",
       body:
       `nome_gestor_espaco=${txtNome}&morada=${txtMorada}&password=${txtPassword}
@@ -113,4 +113,3 @@ function getCookie(cname) {
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
-

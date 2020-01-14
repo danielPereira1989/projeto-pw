@@ -12,12 +12,12 @@ window.onload = () =>{
 
 //renderizar pistas
 const renderTracks = async () =>{
-    const response = await fetch(`http://localhost:3000/track`)
+    const response = await fetch(`https://gestorespacos.herokuapp.com/track`)
     const track = await response.json()
-    
+
     let i =1
     for (const tracks of track) {
-        if(tracks.idEspacoT_fk==id_espaco){    
+        if(tracks.idEspacoT_fk==id_espaco){
         const nome_track=tracks.track_name;
         console.log(nome_track);
 
@@ -28,7 +28,7 @@ const renderTracks = async () =>{
             document.getElementById("tracksIn").innerHTML+=`<div class ="row">
             <div class="col-md-12">
             <p> <button value='${id_track}' class="btn btn-warning verPista" name="verPista"> ${nome_track} </button></a>
-            <i value='${id_track}' class="fa fa-trash fa-lg remove"style="color: #d90000;padding-left: 20px;"></i> 
+            <i value='${id_track}' class="fa fa-trash fa-lg remove"style="color: #d90000;padding-left: 20px;"></i>
             </p>
             </div>
             </div>`
@@ -37,7 +37,7 @@ const renderTracks = async () =>{
             document.getElementById("tracksOut").innerHTML+=`<div class ="row">
             <div class="col-md-12">
             <p> <button value='${id_track}' class="btn btn-warning verPista" name="verPista"> ${nome_track} </button></a>
-            <i value='${id_track}' class="fa fa-trash fa-lg remove" style="color: #d90000;padding-left: 20px;"></i> 
+            <i value='${id_track}' class="fa fa-trash fa-lg remove" style="color: #d90000;padding-left: 20px;"></i>
             </p>
             </div>
             </div>`
@@ -46,7 +46,7 @@ const renderTracks = async () =>{
       }
     }
 
-   // Gerir o clique no ícone de Remover        
+   // Gerir o clique no ícone de Remover
    const btnDelete = document.getElementsByClassName("remove")
    for (let i = 0; i < btnDelete.length; i++) {
        btnDelete[i].addEventListener("click", () => {
@@ -66,12 +66,12 @@ const renderTracks = async () =>{
                    let id_track = btnDelete[i].getAttribute("value")
                    console.log(id_track)
                    try {
-                       const response = await fetch(`http://localhost:3000/track/del/${id_track}`, {
+                       const response = await fetch(`https://gestorespacos.herokuapp.com/track/del/${id_track}`, {
                            method: "PUT"
                        })
                        if (response.status == 204) {
                            swal('Removido!', 'A pista foi removida !', 'success')
-                           
+
                        }
                    } catch (err) {
                        swal({
@@ -80,14 +80,14 @@ const renderTracks = async () =>{
                            text: err
                        })
                    }
-                  
+
                }
            })
-           
-       }) 
+
+       })
    }
 
-   
+
 //guardar na cookie
 const botaoEdit = document.getElementsByName("verPista");
 
@@ -103,10 +103,10 @@ const botaoEdit = document.getElementsByName("verPista");
             console.log("entrou no click")
             console.log("ola")
             console.log(idTrack)
-            
+
             setCookie('idTrack', idTrack, 1);
             window.location.href = "Pista.html"
-            }) 
+            })
 
         }
 
@@ -120,14 +120,14 @@ const botaoEdit = document.getElementsByName("verPista");
 //fetch para buscar preencher o menu com os dados do utilizador
 const renderMenu = async () =>{
     console.log(user_id)
-    const response1 = await fetch(`http://localhost:3000/spacemanager/inf/${user_id}`);
+    const response1 = await fetch(`https://gestorespacos.herokuapp.com/spacemanager/inf/${user_id}`);
     const p = await response1.json();
     const spacemanager = p[0];
-    
+
     console.log(spacemanager.nome_gestor_espaco);
 
     id_espaco = spacemanager.idEspacoSM_fk;
-    
+
     console.log(spacemanager.idEspacoSM_fk);
 
     document.getElementById("nome1").innerHTML=spacemanager.nome_gestor_espaco;
@@ -136,16 +136,16 @@ const renderMenu = async () =>{
 
     }
 
-//Caracteristicas 
+//Caracteristicas
 const btnView = document.getElementsByClassName("verPista")
 console.log(99)
 console.log(btnView)
 for (let i = 0; i < btnView.length; i++) {
-  btnView[i].addEventListener("click", () => {  
+  btnView[i].addEventListener("click", () => {
     console.log("rrrrrrrrr")
-    const response2 =  fetch(`http://localhost:3000/track/${id_track}`)
+    const response2 =  fetch(`https://gestorespacos.herokuapp.com/track/${id_track}`)
     const tracks = response2.json()
-       
+
         if (track.id_track == btnView[i].getAttribute("value")) {
         swal({
           title: 'Características',
@@ -154,11 +154,11 @@ for (let i = 0; i < btnView.length; i++) {
           text : 'Distância',
           text : track.distance,
           text : 'Capacidade:',
-          text : track.capacity `pessoas`, 
+          text : track.capacity `pessoas`,
           showCancelButton: true,
           cancelButtonColor: '#d33',
           cancelButtonText: 'Cancelar',
-        }) 
+        })
     }
 })
 }
@@ -182,7 +182,7 @@ formAddPista.addEventListener("submit", async (event) =>{
     console.log(idEspacoT_fk);
 
 
-    
+
         let idTracktype_fk
         for (var i = 0; i < idTracktype.length; i++) {
             console.log("entrou no for")
@@ -198,7 +198,7 @@ console.log("antescaracteristicas")
     let response
         if (isNew){
             console.log("entrou no if ")
-        response = await fetch(`http://localhost:3000/track`,{
+        response = await fetch(`https://gestorespacos.herokuapp.com/track`,{
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
@@ -208,14 +208,14 @@ console.log("antescaracteristicas")
 
             formAddPista.reset();
             window.location.href = "space.html"
-        } 
-        isNew = true   
+        }
+        isNew = true
 
 })
 
 
 
-        
+
 
 
 

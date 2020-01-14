@@ -1,37 +1,37 @@
-const urlBase = "http://localhost:3000"
+const urlBase = "https://gestorespacos.herokuapp.com/"
 let isNew = true
 let id_edit =""
 
 
-window.onload = () => {  
+window.onload = () => {
     let user_id = getCookie('id');
     console.log(getCookie('id'));
     //fetch para buscar preencher o menu com os dados do utilizador
     const renderMenu = async () =>{
-        const response1 = await fetch(`http://localhost:3000/spacemanager/inf/${user_id}`);
+        const response1 = await fetch(`https://gestorespacos.herokuapp.com/spacemanager/inf/${user_id}`);
         const p = await response1.json();
         const spacemanager = p[0];
-        
+
         console.log(spacemanager.nome_gestor_espaco);
-    
+
         id_espaco = spacemanager.idEspacoSM_fk;
-        
+
         console.log(id_espaco);
-    
+
         document.getElementById("nome1").innerHTML=spacemanager.nome_gestor_espaco;
         document.getElementById("nome2").innerHTML=spacemanager.nome_gestor_espaco;
         document.getElementById("email1").innerHTML=spacemanager.email_gestor;
-    
+
         }
         renderMenu();
     renderSponsers()
 
-}  
+}
 
-// References to HTML objects   
+// References to HTML objects
 const tblPatrocinadores = document.getElementById("tblPatrocinadores")
 const formPatrocinadores = document.getElementById("formPatrocinadores")
-  
+
         formPatrocinadores.addEventListener("submit", async (event) => {
             event.preventDefault()
             const nome_patrocinador = document.getElementById("nome_patrocinador").value
@@ -42,23 +42,23 @@ const formPatrocinadores = document.getElementById("formPatrocinadores")
             const Morada = document.getElementById("Morada").value
             const validade_patrocinio = document.getElementById("validade_patrocinio").value
             const txtNotas = document.getElementById("txtNotas").value
-           
-    
+
+
             // Verifica flag isNew para saber se se trata de uma adição ou de um atualização dos dados de um patrocinador
             let response
             if (isNew) {
                 console.log('antesdofetchdeAdd')
-    
+
                 // Adiciona Patrocinador
-                response = await fetch(`http://localhost:3000/sponser`, {
+                response = await fetch(`https://gestorespacos.herokuapp.com/sponser`, {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
                     },
                     method: "POST",
                     body: `nome_patrocinador=${nome_patrocinador}&Contacto=${Contacto}&pessoa_contacto=${pessoa_contacto}
                     &NIF=${NIF}&Morada=${Morada}&active=1`
-                  }) 
-                  const sponser = response.json() 
+                  })
+                  const sponser = response.json()
                   .then(function() {
                     fetch(`http://localhost:3000/sponsership`, {
                         headers: {
@@ -67,39 +67,39 @@ const formPatrocinadores = document.getElementById("formPatrocinadores")
                         method: "POST",
                         body: `preco_patrocinio=${preco_patrocinio}& validade_patrocinio=${validade_patrocinio}
                         &notas=${txtNotas}&active=1`
-    
+
                    }  )
                    renderSponsers()
                  })
         } else {
             // Atualiza Patrocinador
-        
-                response = await fetch(`http://localhost:3000/sponser/${id_edit}`, {
+
+                response = await fetch(`https://gestorespacos.herokuapp.com/sponser/${id_edit}`, {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
                     },
                     method: "PUT",
                     body: `nome_patrocinador=${nome_patrocinador}&Contacto=${Contacto}&pessoa_contacto=${pessoa_contacto}
                     &NIF=${NIF}&Morada=${Morada}&active=1`
-                }) 
+                })
                 .then(function() {
-                    fetch(`http://localhost:3000/sponser/${id_edit}/sponsership/`, {
+                    fetch(`https://gestorespacos.herokuapp.com/sponser/${id_edit}/sponsership/`, {
                         headers: {
                             "Content-Type": "application/x-www-form-urlencoded"
                         },
                         method: "PUT",
                         body: `preco_patrocinio=${preco_patrocinio}& validade_patrocinio=${validade_patrocinio}
                         &notas=${txtNotas}&active=1`
-    
+
                    })
-        
+
                 })
-                renderSponsers() 
+                renderSponsers()
             }
             isNew = true
             renderSponsers()
-           
-        }) 
+
+        })
 
         const renderSponsers = async () => {
             formPatrocinadores.reset()
@@ -108,14 +108,14 @@ const formPatrocinadores = document.getElementById("formPatrocinadores")
                 <tr class='bg-warning'>
                 <th class='w-2'>#</th>
                 <th class='w-30'>Nome</th>
-                <th class='w-8'>NIF/NIPC</th>              
-                <th class='w-15'>Contacto</th> 
+                <th class='w-8'>NIF/NIPC</th>
+                <th class='w-15'>Contacto</th>
                 <th class='w-8'>Validade</th>
                 <th class='w-6'>Montante</th>
-                <th class='w-6'>Ações</th> 		    
-                    </tr> 
+                <th class='w-6'>Ações</th>
+                    </tr>
                 </thead><tbody>
-                
+
             `
             console.log('depoistabela')
             const response = await fetch(`${urlBase}/sponser`)
@@ -123,24 +123,24 @@ const formPatrocinadores = document.getElementById("formPatrocinadores")
             const response2 = await fetch(`${urlBase}/sponsershipreadAll`)
             const sponserships = await response2.json()
             let validade = ""
-            let preco ="" 
+            let preco =""
 
             let i = 1
-            
+
             for (const sponser of sponsers) {
-                
+
 
                     console.log("entrou no for")
-                    
-                  
-                  
+
+
+
  if(sponserships.sponser_fk = sponser.id_patrocinador){
-                           
-                            
+
+
                             id_patrocinador =sponser.id_patrocinador
-                            console.log("forsponser") 
+                            console.log("forsponser")
                             console.log(sponserships.validade_patrocinio)
-                              
+
                 strHtml += `
                 <tr>
             <td >${sponser.id_patrocinador}</td>
@@ -154,27 +154,27 @@ const formPatrocinadores = document.getElementById("formPatrocinadores")
                         <i value='${sponser.id_patrocinador}' class='fas fa-trash-alt remove'></i>
                     </td>
                 </tr>
-                  ` 
+                  `
                   console.log("tabeladinamica")
                             }
-                        
-                 
-                       
-                            
+
+
+
+
  i++
 console.log("final de tudo")
                 }
- 
-  
-           
-        
+
+
+
+
 
             strHtml += "</tbody>"
             tblPatrocinadores.innerHTML = strHtml
 
 
 
-// Gerir o clique no ícone de Editar        
+// Gerir o clique no ícone de Editar
         const btnEdit = document.getElementsByClassName("edit")
         for (let i = 0; i < btnEdit.length; i++) {
             btnEdit[i].addEventListener("click", () => {
@@ -187,18 +187,18 @@ console.log("final de tudo")
                         document.getElementById("pessoa_contacto").value = sponser.pessoa_contacto
                         document.getElementById("preco_patrocinio").value = sponser.preco_patrocinio
                         document.getElementById("NIF").value = sponser.NIF
-                        
-                for (const sponsership of sponserships) { 
+
+                for (const sponsership of sponserships) {
                     document.getElementById("Morada").value = sponser.Morada
                     document.getElementById("validade_patrocinio").value = sponser.validade_patrocinio
                     document.getElementById("txtNotas").value = sponser.Notas
-                }     
+                }
                     }
                 }
             })
         }
-      
-        // Gerir o clique no ícone de Remover        
+
+        // Gerir o clique no ícone de Remover
         const btnDelete = document.getElementsByClassName("remove")
         for (let i = 0; i < btnDelete.length; i++) {
             btnDelete[i].addEventListener("click", () => {
@@ -235,7 +235,7 @@ console.log("final de tudo")
             })
         }
     }
-   
+
 
     function getCookie(cname) {
         var name = cname + "=";
@@ -252,14 +252,13 @@ console.log("final de tudo")
         }
         return "";
       }
-    
-    
+
+
       function deleteCookie(name) { setCookie(name, '', -1); }
-    
+
       function setCookie(cname, cvalue, exdays) {
         var d = new Date();
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
         var expires = "expires="+ d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-      }    
-    
+      }

@@ -6,14 +6,14 @@ window.onload=() => {
     console.log(getCookie('id'));
 //fetch para buscar preencher o menu com os dados do utilizador
     const renderMenu = async () =>{
-    const response1 = await fetch(`http://localhost:3000/spacemanager/inf/${user_id}`);
+    const response1 = await fetch(`https://gestorespacos.herokuapp.com/spacemanager/inf/${user_id}`);
     const p = await response1.json();
     const spacemanager = p[0];
-    
+
     console.log(spacemanager.nome_gestor_espaco);
 
     id_espaco = spacemanager.idEspacoSM_fk;
-    
+
     console.log(id_espaco);
 
     document.getElementById("nome1").innerHTML=spacemanager.nome_gestor_espaco;
@@ -26,7 +26,7 @@ window.onload=() => {
 }
 
 const material = document.getElementById("formMateriais");
-let tblMateriais = document.getElementById("tblMaterials");  
+let tblMateriais = document.getElementById("tblMaterials");
 
 material.addEventListener("submit", async (event) =>{
     event.preventDefault()
@@ -36,14 +36,14 @@ material.addEventListener("submit", async (event) =>{
     const quantidade = document.getElementById("quantidade").value;
     const idEspaco_fk = id_espaco;
     console.log(idEspaco_fk);
-  
+
 // Verifica flag isNew para saber se se trata de uma adição ou de um atualização dos dados de um patrocinador
 let response
 if (isNew) {
     console.log('antesdofetchdeAdd')
 
     // Adiciona Patrocinador
-            response = await fetch(`http://localhost:3000/materials`, {
+            response = await fetch(`https://gestorespacos.herokuapp.com/materials`, {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
@@ -53,34 +53,34 @@ if (isNew) {
     renderMaterial();
 }else {
     // Atualiza Material
-        response = await fetch(`http://localhost:3000/materials/${id_material}`, {
+        response = await fetch(`https://gestorespacos.herokuapp.com/materials/${id_material}`, {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             method: "PUT",
             body: `referencia_material=${referencia}&nome_material=${nome_material}&descricao=${descricao}&quantidade=${quantidade}&idEspaco_fk=${idEspaco_fk}`
         })
-        renderMaterial() 
+        renderMaterial()
     }
     isNew = true
     window.location.href = "inventory.html"
 })
 
- 
-  
+
+
     const renderMaterial = async () => {
         material.reset()
         let strHtml = `
         <thead >
         <tr>
             <th class='w-30 text-center bg-warning'>Referencia do Material</th>
-            <th class='w-30 text-center bg-warning'>Nome do Material</th>              
-            <th class='w-20 text-center bg-warning'>Descrição</th>  
+            <th class='w-30 text-center bg-warning'>Nome do Material</th>
+            <th class='w-20 text-center bg-warning'>Descrição</th>
             <th class='w-20 text-center bg-warning'>Quantidade</th>
-            <th class='w-20 text-center bg-warning'> Ações</th> 		</tr>    
-        </thead><tbody> 
+            <th class='w-20 text-center bg-warning'> Ações</th> 		</tr>
+        </thead><tbody>
     `
-      const response = await fetch(`http://localhost:3000/materials`)
+      const response = await fetch(`https://gestorespacos.herokuapp.com/materials`)
       const materials = await response.json()
       let i = 1
       for (const material of materials) {
@@ -88,7 +88,7 @@ if (isNew) {
           console.log(materials)
           strHtml += `
               <tr>
-              
+
                   <td class='w-30 text-center'>${material.referencia_material}</td>
                   <td class='w-30 text-center'>${material.nome_material}</td>
                   <td class='w-30 text-center'>${material.descricao}</td>
@@ -103,9 +103,9 @@ if (isNew) {
       }}
       strHtml += "</tbody>"
       tblMateriais.innerHTML = strHtml
-      
-   
-     // Gerir o clique no ícone de Editar        
+
+
+     // Gerir o clique no ícone de Editar
      const btnEdit = document.getElementsByClassName("edit")
      for (let i = 0; i < btnEdit.length; i++) {
          btnEdit[i].addEventListener("click", () => {
@@ -117,12 +117,12 @@ if (isNew) {
                     document.getElementById("nome_material").value = material.nome_material;
                     document.getElementById("descricao").value = material.descricao;
                     document.getElementById("quantidade").value = material.quantidade;
-                    
+
                  }
              }
          })
      }
-// Gerir o clique no ícone de Remover        
+// Gerir o clique no ícone de Remover
 const btnDelete = document.getElementsByClassName("remove")
 for (let i = 0; i < btnDelete.length; i++) {
     btnDelete[i].addEventListener("click", () => {
@@ -142,9 +142,9 @@ for (let i = 0; i < btnDelete.length; i++) {
                 console.log(id_material) //funciona => le direito
                 try {
                     console.log(id_material)
-                    const response = await fetch(`http://localhost:3000/materials/del/${id_material}`, {
+                    const response = await fetch(`https://gestorespacos.herokuapp.com/materials/del/${id_material}`, {
                         method: "PUT"
-                        
+
                     })
                     console.log(id_material)
                     if (response.status == 204) {
@@ -164,26 +164,26 @@ for (let i = 0; i < btnDelete.length; i++) {
     })
     }
    }
-                
+
 
 
 
     //fetch para buscar preencher o menu com os dados do utilizador
     const renderMenu = async () =>{
-        const response1 = await fetch(`http://localhost:3000/spacemanager/inf/${user_id}`);
+        const response1 = await fetch(`https://gestorespacos.herokuapp.com/spacemanager/inf/${user_id}`);
         const p = await response1.json();
         const spacemanager = p[0];
-        
+
         console.log(spacemanager.nome_gestor_espaco);
-    
+
         id_espaco = spacemanager.idEspacoSM_fk;
-        
+
         console.log(id_espaco);
-    
+
         document.getElementById("nome1").innerHTML=spacemanager.nome_gestor_espaco;
         document.getElementById("nome2").innerHTML=spacemanager.nome_gestor_espaco;
         document.getElementById("email1").innerHTML=spacemanager.email_gestor;
-    
+
         }
 
                 function getCookie(cname) {
@@ -201,15 +201,13 @@ for (let i = 0; i < btnDelete.length; i++) {
                     }
                     return "";
                   }
-                
-                
+
+
                   function deleteCookie(name) { setCookie(name, '', -1); }
-                
+
                   function setCookie(cname, cvalue, exdays) {
                     var d = new Date();
                     d.setTime(d.getTime() + (exdays*24*60*60*1000));
                     var expires = "expires="+ d.toUTCString();
                     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
                   }
-    
-

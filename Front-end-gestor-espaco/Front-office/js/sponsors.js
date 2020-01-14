@@ -8,7 +8,7 @@ window.onload = () => {
 
 const rendersponsor = document.getElementById("renderSponsors")
 const renderSponsors = async () => {
-  const response = await fetch(`http://localhost:3000/sponser`)
+  const response = await fetch(`https://gestorespacos.herokuapp.com/sponser`)
   console.log("sdfghj")
   const sponsers = await response.json()
     let str= ``
@@ -21,6 +21,6 @@ const renderSponsors = async () => {
 	`
 	}
     rendersponsor.innerHTML = str
- 
+
 
   }

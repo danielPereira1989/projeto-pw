@@ -1,11 +1,11 @@
 let isNew = true
 
 window.onload = () => {
-    
+
     // Renderizaçao das pistas
 renderTracks()
 
-    // Gerir o clique no ícone de Remover  
+    // Gerir o clique no ícone de Remover
     const btnDelete = document.getElementsByClassName("remove")
     for (let i = 0; i < btnDelete.length; i++) {
         btnDelete[i].addEventListener("click", () => {
@@ -22,7 +22,7 @@ renderTracks()
                 if (result.value) {
                     let idTrack = btnDelete[i].getAttribute("id")
                     try {
-                        const response = await fetch(`http://localhost:3000/space/1/track/:${idTrack}`, { method: "DELETE" })
+                        const response = await fetch(`https://gestorespacos.herokuapp.com/space/1/track/:${idTrack}`, { method: "DELETE" })
                         const tracks = await response.json();
                         swal('Pista Removida!', `A ${track_name} foi removida com sucesso!`, 'success')
                         renderTracks()
@@ -39,11 +39,11 @@ renderTracks()
     }
     renderTracks()
 }
-    
-   
-   
 
-    // References to HTML objects   
+
+
+
+    // References to HTML objects
     const divTracks = document.getElementById("divTracks")
 
 
@@ -55,7 +55,7 @@ renderTracks()
         const distance = document.getElementById("distance").value
         let idTracktype = document.getElementsByName("idTracktype_fk")
         let idEspacoT_fk = "8"
-        
+
         id_espaco = i
         let idTracktype_fk
         for (var i = 0; i < idTracktype.length; i++) {
@@ -64,7 +64,7 @@ renderTracks()
                 console.log(idTracktype_fk)
             }
         }
-        
+
 
         let obj_schedule_track = {};
         const schedule_track = document.getElementsByName("schedule_track")
@@ -80,19 +80,19 @@ renderTracks()
                   }*/
             }
         }
-        
-        // Verifica flag isNew para saber se se trata de uma adição 
+
+        // Verifica flag isNew para saber se se trata de uma adição
         let response
         if (isNew) {
             // Adiciona Pista
-            response = await fetch(`http://localhost:3000/space/8/track`, {
+            response = await fetch(`https://gestorespacos.herokuapp.com/space/8/track`, {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
                 method: "POST",
                 body: `track_name=${track_name}&capacity=${capacity}&distance=${distance}&idTracktype_fk=${idTracktype_fk}&idEspacoT_fk=${idEspacoT_fk}&active=1`
             })
-                
+
         }
         isNew = true
 
@@ -100,16 +100,16 @@ renderTracks()
         renderTracks()
     })
 
-    
+
     const renderTracks = async () => {
-        const response = await fetch(`http://localhost:3000/track/`)
+        const response = await fetch(`https://gestorespacos.herokuapp.com/track/`)
         const track = await response.json()
         for (const tracks of track) {
             if (tracks.idTracktype_fk == 1) {
                 document.getElementById("tracksIn").innerHTML = `
                     <div class ="row">
                     <p> <a href= 'Pista.html'> <button class="btn btn-warning"> ${track_name} </button></a>
-                    <i class="fa fa-trash fa-lg remove"style="color: #d90000;padding-left: 20px;"></i> 
+                    <i class="fa fa-trash fa-lg remove"style="color: #d90000;padding-left: 20px;"></i>
                     </p>
                     </div>`
             }
@@ -118,13 +118,10 @@ renderTracks()
                 document.getElementById("tracksOut").innerHTML = `
                        <div class ="row">
                          <p> <a href= 'Pista.html'> <button class="btn btn-warning"> ${track_name} </button></a>
-                            <i class="fa fa-trash fa-lg remove"style="color: #d90000;padding-left: 20px;"></i> 
+                            <i class="fa fa-trash fa-lg remove"style="color: #d90000;padding-left: 20px;"></i>
                          </p>
                        </div>`
             }
 
         }
     }
-    
-    
-
