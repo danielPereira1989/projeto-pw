@@ -5,7 +5,7 @@ renderSpaces()
 
 const renderspace = document.getElementById("renderspace")
 const renderSpaces = async () => {
-  const response = await fetch(`http://localhost:3000/space`)
+  const response = await fetch(`http:gestorespacos.herokuapp.com/space`)
   console.log("sdfghj")
   const spaces = await response.json()
     let divisao = ``
@@ -24,7 +24,7 @@ const renderSpaces = async () => {
     renderspace.innerHTML = divisao
 
     //ABRIR O MODAL VerPistas
-    const response2 = await fetch(`http://localhost:3000/track`)
+    const response2 = await fetch(`http:gestorespacos.herokuapp.com/track`)
     const tracks = await response2.json()
   
     const btnView = document.getElementsByClassName("ole")
